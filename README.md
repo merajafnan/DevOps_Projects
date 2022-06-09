@@ -1,4 +1,5 @@
-# DevOps_Projects - Check Different branches for various projects
+# DevOps_Projects - Check different branches for various projects 
+# Manual attached in each branch for step by step guide for deployment
 
 Technologies
 
