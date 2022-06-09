@@ -44,15 +44,15 @@
           Name: Eereeda-pubsub2
       register: pubsub2_out
 
-    - name: Create Public Subnet 2 in Zone 2
-      ec2_vpc_subnet:
+    - name: Create Public Subnet 3 in Zone 3
+      ec3_vpc_subnet:
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
-        az: "{{zone2}}"
+        az: "{{zone3}}"
         state: "{{state}}"
-        cidr: "{{PubSub2Cidr}}"
+        cidr: "{{PubSub3Cidr}}"
         map_public: yes
         resource_tags:
-          Name: Eereeda-pubsub2
-      register: pubsub2_out
+          Name: Eereeda-pubsub3
+      register: pubsub3_out
     
