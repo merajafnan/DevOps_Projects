@@ -4,7 +4,6 @@
 Technologies
 
 AWS – Various Resource
-
 Ansible - Automation Tool
 
 Jenkins – Continuous Integration Server
