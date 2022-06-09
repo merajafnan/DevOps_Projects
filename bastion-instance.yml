@@ -1,0 +1,11 @@
+---
+- name: Setup Eereeda Bastion Host
+    hosts: localhost
+    connection: local
+    gather_facts: no
+    tasks:
+      - name: Import VPC Variables
+        include_vars: vars/bastion_setup
+
+      - name: Import VPC setup Variables
+        include_vars: vars/output_vars
