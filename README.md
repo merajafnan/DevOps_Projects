@@ -5,7 +5,6 @@ Technologies
 
 AWS – Various Resource
 Ansible - Automation Tool
-
 Jenkins – Continuous Integration Server
 
 GIT – Version Control System
