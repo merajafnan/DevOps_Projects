@@ -177,4 +177,81 @@
       register: db01_out
 
     - debug:
-        var: db01_out
+        var: db01_out.tagged_instances[0].id
+
+    - local_action:
+        module: ec2_elb_lb
+        name: "eereeda-elb"
+        region: "{{region}}"
+        state: present
+        instance_ids:
+          - "{{web01_out.tagged_instances[0].id}}" #NginX server
+        purge_instance_ids: true  #Apends
+        security_group_ids: "{{EereedaELBSG_out.group_id}}"
+        subnets:
+          - "{{PubSub1Cidr}}"
+          - "{{PubSub2Cidr}}"
+          - "{{PubSub3Cidr}}"
+        listeners:
+          - protocol: http
+            load_balancer_port: 80
+            instance_port: 80
+
+    - name: Insert/Update Host IP & name in file provision-stack/group_vars/hostip
+      blockinfile:
+        path: provision-stack/group_vars/hostip
+        backup: yes
+        block: |
+          web01_ip: {{web01_out.tagged_instances[0].private_ip}}
+          app01_ip: {{app01_out.tagged_instances[0].private_ip}}
+          rmq01_ip: {{rmq01_out.tagged_instances[0].private_ip}}
+          mc01_ip: {{mc01_out.tagged_instances[0].private_ip}}
+          db01_ip: {{db01_out.tagged_instances[0].private_ip}}
+
+    - name: Copy login key to provision_stack directory
+      copy:
+        src: Eereeda-key-Stack.pem
+        dest: provision-stack/Eereeda-key-Stack.pem
+        mode: 0400
+
+    - name: Insert/Update Inventory file provision-stack/inventory-eereeda
+      blockinfile:
+        path: provision-stack/inventory-eereeda
+        block: |
+          web01 ansible_host= {{web01_out.tagged_instances[0].private_ip}}
+          app01 ansible_host= {{app01_out.tagged_instances[0].private_ip}}
+          rmq01 ansible_host= {{rmq01_out.tagged_instances[0].private_ip}}
+          mc01 ansible_host= {{mc01_out.tagged_instances[0].private_ip}}
+          db01 ansible_host= {{db01_out.tagged_instances[0].private_ip}}
+          cntl  ansible_host= 27.7.109.52 ansible_connection=local
+
+          [websrvgrp]
+          web01
+
+          [appsrvgrp]
+          app01
+
+          [rmqsrvgrp]
+          rmq01
+
+          [mcsrvgrp]
+          mc01
+
+          [dbsrvgrp]
+          db01
+
+          [control]
+          cntl
+
+          [stack_inst: children]
+          websrvgrp
+          appsrvgrp
+          rmqsrvgrp
+          mcsrvgrp
+          mcsrvgrp
+          dbsrvgrp
+
+          [stack_inst: vars]
+          ansible_user=ubuntu
+          ansible_ssh_private_key_file=Eereeda-key-Stack.pem
+          #ansible_python_interpreter=/usr/bin/python3
