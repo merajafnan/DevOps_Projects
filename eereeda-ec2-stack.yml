@@ -25,3 +25,35 @@
         dest: "./Eereeda-key-Stack.pem"
         mode: 0600
       when: Eereeda_key_out.changed
+
+    - name: Create security group for Load Balancer
+      ec2_group:
+        name: Eereeda-LB-sg
+        description: Allow port 80 from everywhere and all ports withn SG
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+      register: EereedaELBSG_out
+
+    - name: Create security group for Eereeda Stack
+      ec2_group:
+        name: Eereeda-Stack-sg
+        description: Allow port 22 from everywhere and all ports withn SG
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        pruge_rules: no
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            group_id: "{{EereedaELBSG_out.group_id}}"
+
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            group_id: "{{.group_id}}"
+      register: EereedaELBSG_out
