@@ -4,3 +4,24 @@
   connection: local
   gather_facts: no
   tasks:
+    - name: Import output variable
+      include_vars: vars/output_vars
+
+    - name: Import Eereeda setup variable
+      include_vars: vars/eereedastacksetup
+
+    - name: Import VPC setup variable
+      include_vars: vars/vpc_setup
+
+    - name: Create Eereeda EC2 Key
+      ec2_key:
+        name: Eereeda-key-Stack
+        region: "{{region}}"
+      register: Eereeda_key_out
+
+    - name: Save private Key into file Eereeda-key-Stack.pem
+      copy:
+        content: "{{Eereeda_key_out.key.private_key}}"
+        dest: "./Eereeda-key-Stack.pem"
+        mode: 0600
+      when: Eereeda_key_out.changed
