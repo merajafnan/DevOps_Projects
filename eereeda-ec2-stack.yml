@@ -45,7 +45,7 @@
         description: Allow port 22 from everywhere and all ports withn SG
         region: "{{region}}"
         vpc_id: "{{vpcid}}"
-        pruge_rules: no
+        purge_rules: no
         rules:
           - proto: tcp
             from_port: 80
@@ -64,7 +64,7 @@
         description: Allow port 22 from everywhere and all ports withn SG
         region: "{{region}}"
         vpc_id: "{{vpcid}}"
-        pruge_rules: no
+        purge_rules: no
         rules:
           - proto: tcp
             from_port: 80
