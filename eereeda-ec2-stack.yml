@@ -70,3 +70,111 @@
             from_port: 80
             to_port: 80
             group_id: "{{EereedaStackSG_out.group_id}}"
+
+    - name: Creating Nginx Web01
+      ec2:
+        key_name: Eereeda-key-Stack
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{nginx_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "Web01"
+          Project: Eereeda
+          Owner: Meraj
+        exact_count: 1
+        count_tag:
+          Name: "Web01"
+          Project: Eereeda
+          Owner: Meraj
+        group_id: "{{EereedaStackSG_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+      register: web01_out
+
+    - name: Creating Tomcat App01
+      ec2:
+        key_name: Eereeda-key-Stack
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{tomcat_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "App01"
+          Project: Eereeda
+          Owner: Meraj
+        exact_count: 1
+        count_tag:
+          Name: "App01"
+          Project: Eereeda
+          Owner: Meraj
+        group_id: "{{EereedaStackSG_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+      register: app01_out
+
+    - name: Creating Memcache Mc01
+      ec2:
+        key_name: Eereeda-key-Stack
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{memcache_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "Mc01"
+          Project: Eereeda
+          Owner: Meraj
+        exact_count: 1
+        count_tag:
+          Name: "Mc01"
+          Project: Eereeda
+          Owner: Meraj
+        group_id: "{{EereedaStackSG_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+      register: mc01_out
+
+    - name: Creating RabbitMQ RMQ01
+      ec2:
+        key_name: Eereeda-key-Stack
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{rmq_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "RMQ01"
+          Project: Eereeda
+          Owner: Meraj
+        exact_count: 1
+        count_tag:
+          Name: "RMQ01"
+          Project: Eereeda
+          Owner: Meraj
+        group_id: "{{EereedaStackSG_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+      register: rmq01_out
+
+    - name: Creating MySQL Db01
+      ec2:
+        key_name: Eereeda-key-Stack
+        region: "{{region}}"
+        instance_type: t2.micro
+        image: "{{mysql_ami}}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "Db01"
+          Project: Eereeda
+          Owner: Meraj
+        exact_count: 1
+        count_tag:
+          Name: "Db01"
+          Project: Eereeda
+          Owner: Meraj
+        group_id: "{{EereedaStackSG_out.group_id}}"
+        vpc_subnet_id: "{{privsub1id}}"
+      register: db01_out
+
+    - debug:
+        var: db01_out
