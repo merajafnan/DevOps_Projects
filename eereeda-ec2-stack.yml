@@ -55,5 +55,18 @@
           - proto: tcp
             from_port: 22
             to_port: 22
-            group_id: "{{.group_id}}"
-      register: EereedaELBSG_out
+            group_id: "{{BastionSGid}}"
+      register: EereedaStackSG_out
+
+    - name: Create security group with its own SG ID
+      ec2_group:
+        name: Eereeda-Stack-sg
+        description: Allow port 22 from everywhere and all ports withn SG
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        pruge_rules: no
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            group_id: "{{EereedaStackSG_out.group_id}}"
