@@ -179,23 +179,43 @@
     - debug:
         var: db01_out.tagged_instances[0].id
 
-    - local_action:
-        module: ec2_elb_lb
-        name: "eereeda-elb"
+#    - local_action:
+#        module: ec2_elb_lb
+#        name: "eereeda-elb"
+#        region: "{{region}}"
+#        state: present
+#        instance_ids:
+#          - "{{web01_out.tagged_instances[0].id}}"
+#        purge_instance_ids: true
+#        security_group_ids: "{{EereedaELBSG_out.group_id}}"
+#        subnets:
+#          - "{{PubSub1Cidr}}"
+#          - "{{PubSub2Cidr}}"
+#          - "{{PubSub3Cidr}}"
+#        listeners:
+#          - protocol: http
+#            load_balancer_port: 80
+#            instance_port: 80
+
+    - elb_application_lb:
+        name: eereeda-elb
         region: "{{region}}"
-        state: present
         instance_ids:
-          - "{{web01_out.tagged_instances[0].id}}"
+          - "{{ web01_out.tagged_instances[0].id }}"
         purge_instance_ids: true
-        security_group_ids: "{{EereedaELBSG_out.group_id}}"
+        security_groups:
+          - "{{EereedaELBSG_out.group_id}}"
         subnets:
           - "{{PubSub1Cidr}}"
           - "{{PubSub2Cidr}}"
           - "{{PubSub3Cidr}}"
         listeners:
-          - protocol: http
-            load_balancer_port: 80
+          - Protocol: HTTP
+            Port: 80
             instance_port: 80
+        state: present
+
+
 
 #    - name: Insert/Update Host IP & name in file provision-stack/group_vars/hostip
 #      blockinfile:
