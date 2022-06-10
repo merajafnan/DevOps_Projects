@@ -1,0 +1,6 @@
+---
+- name: Setup Eareeda Stack
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
