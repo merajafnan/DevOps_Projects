@@ -221,6 +221,10 @@
         name: "test-please-delete"
         region: "{{region}}"
         state: present
+        subnets:
+          - "{{PubSub1Cidr}}"
+          - "{{PubSub2Cidr}}"
+          - "{{PubSub3Cidr}}"
         listeners:
           - protocol: http # options are http, https, ssl, tcp
             load_balancer_port: 80
