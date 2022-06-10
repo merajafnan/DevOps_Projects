@@ -197,25 +197,34 @@
 #            load_balancer_port: 80
 #            instance_port: 80
 
-    - elb_application_lb:
-        name: eereeda-elb
+#    - elb_application_lb:
+#        name: eereeda-elb
+#        region: "{{region}}"
+#        instance_ids:
+#          - "{{ web01_out.tagged_instances[0].id }}"
+#        purge_instance_ids: true
+#        security_groups:
+#          - "{{EereedaELBSG_out.group_id}}"
+#        subnets:
+#          - "{{PubSub1Cidr}}"
+#          - "{{PubSub2Cidr}}"
+#          - "{{PubSub3Cidr}}"
+#        listeners:
+#          - Protocol: HTTP
+#            Port: 80
+#            instance_port: 80
+#        state: present
+
+
+    - local_action:
+        module: ec2_elb_lb
+        name: "test-please-delete"
         region: "{{region}}"
-        instance_ids:
-          - "{{ web01_out.tagged_instances[0].id }}"
-        purge_instance_ids: true
-        security_groups:
-          - "{{EereedaELBSG_out.group_id}}"
-        subnets:
-          - "{{PubSub1Cidr}}"
-          - "{{PubSub2Cidr}}"
-          - "{{PubSub3Cidr}}"
-        listeners:
-          - Protocol: HTTP
-            Port: 80
-            instance_port: 80
         state: present
-
-
+        listeners:
+          - protocol: http # options are http, https, ssl, tcp
+            load_balancer_port: 80
+            instance_port: 80
 
 #    - name: Insert/Update Host IP & name in file provision-stack/group_vars/hostip
 #      blockinfile:
