@@ -57,7 +57,7 @@
         block:
          - name: Deploy vprofile artifact
            copy:
-             src: "/tmp/eereeda-app-{{vprofile_version}}"
+             src: "/tmp/eereeda-app-{{eereeda_version}}"
              dest: /usr/local/tomcat8/webapps/ROOT.war
              remote_src: yes
            register: deploy_info
