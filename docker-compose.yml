@@ -5,7 +5,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - eereedadbdata: /var/lib/mysql
+      - eereedadbdata:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD="eereedapass"
 
@@ -27,14 +27,14 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - eereedaappdata: /usr/local/tomcat/webapps
+      - eereedaappdata:/usr/local/tomcat/webapps
 
   eereedaweb:
     image: 19c9b3ee71f3
     ports:
       - "80:80"
     volumes:
-      - eereedaappdata: /usr/local/tomcat/webapps
+      - eereedaappdata:/usr/local/tomcat/webapps
 
 volumes:
   eereedadbdata: {}
