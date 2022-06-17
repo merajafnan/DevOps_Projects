@@ -33,8 +33,6 @@ services:
     image: merajafnan/eereeda-web:v1
     ports:
       - "80:80"
-    volumes:
-      - eereedaappdata:/usr/local/tomcat/webapps
 
 volumes:
   eereedadbdata: {}
