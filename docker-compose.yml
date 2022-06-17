@@ -1,0 +1,41 @@
+version: '3'
+services:
+  eereedadb:
+    image: merajafnan/eereeda-db:v1
+    ports:
+      - "3306:3306"
+    volumes:
+      - eereedadbdata: /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD="eereedapass"
+
+  eereedacache01:
+    image: memcached
+    ports:
+      - "11211:11211"
+
+  eereedamq01:
+    image: rabbitmq
+    ports:
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER="guest"
+      - RABBITMQ_DEFAULT_PASS="guest"
+
+  eereedaapp:
+    image: merajafnan/eereeda-app:V1
+    ports:
+      - "8080:8080"
+    volumes:
+      - eereedaappdata: /usr/local/tomcat/webapps
+
+  eereedaweb:
+    image: 19c9b3ee71f3
+    ports:
+      - "80:80"
+    volumes:
+      - eereedaappdata: /usr/local/tomcat/webapps
+
+volumes:
+  eereedadbdata: {}
+  eereedaappdata: {}
