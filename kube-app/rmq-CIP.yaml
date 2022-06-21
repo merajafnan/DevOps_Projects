@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
   - port: 15672
-    targetPort: eereedamq01-port
+    targetPort: eeremq01-port
     protocol: TCP
   selector:
     app: eereedamq01

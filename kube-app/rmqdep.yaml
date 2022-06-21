@@ -18,7 +18,7 @@ spec:
       - name: eereedamq01
         image: rabbitmq
         ports:
-        - name: eereedamq01-port
+        - name: eeremq01-port
           containerPort: 15672
         env: 
          - name: RABBITMQ_DEFAULT_PASS
