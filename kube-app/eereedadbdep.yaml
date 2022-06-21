@@ -1,0 +1,42 @@
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: eereedadb
+  labels:
+    app: eereedadb
+spec:
+  selector:
+    matchLabels:
+      app: eereedadb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: eereedadb
+    spec:
+      containers:
+        - name: eereedadb
+          image: merajafnan/eereeda-db:v1
+          args:
+            - "ignore-db-dir=lost+found"
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: eereeda-db-data
+          ports:
+            - name: eereedadb-port
+              containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: db-pass
+      nodeSelector:
+        zone: us-east-1a
+      volumes:
+        - name: eereeda-db-data
+          awsElasticBlockStore:
+            volumeID: vol-005d1868799f9ba3d
+            fsType: ext4
+
+
