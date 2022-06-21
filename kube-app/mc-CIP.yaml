@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: eereedacache01
+spec:
+  ports:
+  - port: 11211
+    targetPort: eereedamc-port
+    protocol: TCP
+  selector:
+    app: eereedamc
+  type: ClusterIP

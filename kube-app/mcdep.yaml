@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eereedamc
+  labels:
+    app: eereedamc
+spec:
+  selector:
+    matchLabels:
+      app: eereedamc
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: eereedamc
+    spec:
+      containers:
+      - name: eereedamc
+        image: memcached
+        ports:
+        - name: eereedamc-port
+          containerPort: 11211

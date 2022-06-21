@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eereedamq01
+  labels:
+    app: eereedamq01
+spec:
+  selector:
+    matchLabels:
+      app: eereedamq01
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: eereedamq01
+    spec:
+      containers:
+      - name: eereedamq01
+        image: rabbitmq
+        ports:
+        - name: eereedamq01-port
+          containerPort: 15672
+        env: 
+         - name: RABBITMQ_DEFAULT_PASS
+           valueFrom:
+             secretKeyRef:
+               name: app-secret
+               key: rmq-pass
+         - name: RABBITMQ_DEFAULT_USER
+           value: "guest"
