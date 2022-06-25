@@ -9,7 +9,6 @@ resource "aws_db_subnet_group" "eereeda-rds-subgrp" {
 resource "aws_elasticache_subnet_group" "eereeda-ecache-subgrp" {
   name       = "aws_elasticache_subnet_group"
   subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1],module.vpc.private_subnets[2]]
-  }
 }
 
 resource "aws_db_instance" "eereeda-rds" {
