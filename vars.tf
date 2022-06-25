@@ -25,7 +25,7 @@ variable "rmquser" {
   default = "rabbit"
 }
 variable "rmqpass" {
-  default = "eereeda@terraform12345"
+  default = "Gr33n@pple123456"
 }
 
 variable "dbuser" {
