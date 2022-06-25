@@ -45,7 +45,7 @@ resource "aws_mq_broker" "eereeda-rmq" {
   engine_version     = "5.15.0"
   host_instance_type = "mq.t2.micro"
   security_groups = [aws_security_group.eereeda-backend-sg.id]
-  subnet_ids = [module.vpc.private_subnet[0]]
+  subnet_ids = [module.vpc.private_subnets[0]]
   user {
     password = var.rmquser
     username = var.rmqpass
