@@ -47,7 +47,7 @@ resource "aws_mq_broker" "eereeda-rmq" {
   security_groups    = [aws_security_group.eereeda-backend-sg.id]
   subnet_ids         = [module.vpc.private_subnets[0]]
   user {
-    password = var.rmquser
-    username = var.rmqpass
+    password = var.rmqpass
+    username = var.rmquser
   }
 }

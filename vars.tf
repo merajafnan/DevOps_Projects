@@ -21,10 +21,10 @@ variable "MYIP" {
   default = "183.83.39.124/32"
 }
 
-variable "rmquser" {
+variable rmquser {
   default = "rabbit"
 }
-variable "rmqpass" {
+variable rmqpass {
   default = "Gr33n@pple123456"
 }
 
